@@ -112,4 +112,16 @@ describe('mock backdoors', () => {
     setName('Ali')
     expect(mod.getName()).toBe('Ali')
   })
+
+  it('should allow us to do it again and again!', () => {
+    const { setName } = require('./config')
+    setName('Bojack')
+    expect(mod.getName()).toBe('Bojack')
+  })
+
+  it('should allow us to reset back to the original values', () => {
+    const { resetName } = require('./config')
+    resetName()
+    expect(mod.getName()).toBe('Carl')
+  })
 })

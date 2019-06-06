@@ -2,7 +2,8 @@
 // export const age = () => 19
 export const age = jest.fn(() => 19)
 
-let _name = 'Carl'
+const originalName = 'Carl'
+let _name = originalName
 
 module.exports = {
   age,
@@ -18,5 +19,9 @@ module.exports = {
 
   setName(value) {
     _name = value
+  },
+
+  resetName() {
+    _name = originalName
   },
 }
