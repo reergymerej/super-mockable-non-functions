@@ -3,13 +3,14 @@
 export const age = jest.fn(() => 19)
 
 const originalName = 'Carl'
-let _name = originalName
+// let _name = originalName
+const nameMock = jest.fn(() => originalName)
 
 module.exports = {
   age,
 
   get name() {
-    return _name
+    return nameMock()
   },
 
   // These don't work when trying to change.
@@ -17,11 +18,13 @@ module.exports = {
   //   _name = value
   // },
 
-  setName(value) {
-    _name = value
-  },
+  // setName(value) {
+  //   _name = value
+  // },
 
-  resetName() {
-    _name = originalName
-  },
+  // resetName() {
+  //   _name = originalName
+  // },
+
+  nameMock,
 }

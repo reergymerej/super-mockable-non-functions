@@ -107,21 +107,37 @@ describe('mock backdoors', () => {
   //   expect(mod.getName()).toBe('Ali')
   // })
 
-  it('should allow us set state through a backdoor', () => {
+  xit('should allow us set state through a backdoor', () => {
     const { setName } = require('./config')
     setName('Ali')
     expect(mod.getName()).toBe('Ali')
   })
 
-  it('should allow us to do it again and again!', () => {
+  xit('should allow us to do it again and again!', () => {
     const { setName } = require('./config')
     setName('Bojack')
     expect(mod.getName()).toBe('Bojack')
   })
 
-  it('should allow us to reset back to the original values', () => {
+  xit('should allow us to reset back to the original values', () => {
     const { resetName } = require('./config')
     resetName()
+    expect(mod.getName()).toBe('Carl')
+  })
+
+  // Even better, just stick with jest.fn!
+  it('should allow us set state through a Jesty-backdoor', () => {
+    const { nameMock } = require('./config')
+    // mock
+    nameMock.mockImplementationOnce(() => 'Bilbo')
+    expect(mod.getName()).toBe('Bilbo')
+
+    // mock differently
+    nameMock.mockImplementationOnce(() => 'Sally')
+    expect(mod.getName()).toBe('Sally')
+
+    // reset
+    nameMock.mockClear()
     expect(mod.getName()).toBe('Carl')
   })
 })
