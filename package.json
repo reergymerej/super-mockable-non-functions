@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "name": "mock-primitive",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "babel-node src/index.js",
+    "test": "jest src/ --config jest.config.js",
+    "lint": "eslint .",
+    "build": "babel src -d lib --ignore '**/*.test.js,__mocks__'",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6",
+    "babel-eslint": "7",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "3.x",
+    "eslint-plugin-react": "^7.5.1",
+    "jest": "^23.6.0"
+  },
+  "dependencies": {},
+  "license": "ISC"
+}
