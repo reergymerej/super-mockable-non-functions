@@ -46,7 +46,7 @@ xdescribe('mocking in the test', () => {
 // NOTE: Mocks done like above overwrite those in __mocks__/.
 jest.mock('./config')
 
-describe('mocking in the test', () => {
+xdescribe('mocking in the test', () => {
   it('should mock primitives', () => {
     expect(mod.getName()).toBe('Carl')
   })
@@ -62,7 +62,7 @@ describe('mocking in the test', () => {
     expect(mod.getAge()).toBe(19)
   })
 
-  it('should allow you to change the mocks as you go', () => {
+  xit('should allow you to change the mocks as you go', () => {
     const { age } = require('./config')
     age.mockImplementationOnce(() => 99)
     expect(mod.getAge()).toBe(99)
@@ -78,4 +78,38 @@ describe('mocking in the test', () => {
   // })
 
   // How the heck can you mock a non-function multiple ways in the same file?
+  // Option 1 - Create new test files for each non-function import you want to
+  // mock.  😢
+  //
+})
+
+
+// Option 2 - Use a __mocks__/ file, add a backdoor setter, use a getter.
+describe('mock backdoors', () => {
+  it('should mock primitives', () => {
+    expect(mod.getName()).toBe('Carl')
+  })
+
+  it('should mock functions', () => {
+    expect(mod.getAge()).toBe(19)
+  })
+
+  it('should allow us to re-mock functions', () => {
+    const { age } = require('./config')
+    age.mockImplementationOnce(() => 8)
+    expect(mod.getAge()).toBe(8)
+  })
+
+  // You can't use a setter for a module's export.  It's read-only.
+  // it('should allow us to re-mock non-functions', () => {
+  //   const { name } = require('./config')
+  //   name = 'Ali'
+  //   expect(mod.getName()).toBe('Ali')
+  // })
+
+  it('should allow us set state through a backdoor', () => {
+    const { setName } = require('./config')
+    setName('Ali')
+    expect(mod.getName()).toBe('Ali')
+  })
 })
