@@ -14,49 +14,36 @@ const config = jest.genMockFromModule('../config')
 // console.log(config.age)
 // console.log(config.default.age)
 
-const nameMock = jest.fn(() => config.name)
-const ageMock = jest.fn()
-const colorMock = jest.fn(() => config.color)
 
 const primitives = [
-  'age',
+  'color',
   'name',
 ]
 
+const getPrimitiveMockName = (primitive) => `${primitive}Mock`
+
+const primitiveMocks = primitives.reduce((acc, primitive) => {
+  return {
+    ...acc,
+    [getPrimitiveMockName(primitive)]: jest.fn(() => config[primitive]),
+  }
+}, {})
+
 
 const mod = {
-  // ...config,
-
   age: jest.fn(),
-
-
-
-  nameMock,
-
-  colorMock,
-  get color() {
-    return colorMock()
-  },
+  ...primitiveMocks,
 }
 
 
-
 module.exports = new Proxy(mod, {
-
-  // This is a generic getter.  Any property that looks like a primitive will be
-  // intercepted and have the mock returned instead.
+  // This is a generic getter.  Any property that we've created a primitive mock
+  // for will be intercepted and fed the mock value.
   get(target, name, receiver) {
-    const value = Reflect.get(target, name, receiver)
-
-    if (primitives.includes(name)) {
-      if (name === 'name') {
-        return nameMock()
-      }
-      if (name === 'color') {
-        return colorMock()
-      }
-    }
-
-    return value
+    const primitiveMock = primitiveMocks[getPrimitiveMockName(name)]
+    return primitiveMock
+      ? primitiveMock()
+      : Reflect.get(target, name, receiver)
   },
+
 })
