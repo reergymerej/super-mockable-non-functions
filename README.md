@@ -1,4 +1,6 @@
-# mock-primitive
+# jest-mock-primitive
+
+[![Build Status](https://travis-ci.org/reergymerej/super-mockable-non-functions.svg?branch=master)](https://travis-ci.org/reergymerej/super-mockable-non-functions)
 
 Jest gives you a pretty beefy way to mock imports, but have you ever tried to
 [mock a primitive](https://jestjs.io/docs/en/jest-object#primitives)?  You can
@@ -11,6 +13,8 @@ jest.mock('./config', () => ({ name: 'Bingo' }))
 ...but that only works once.  If you need to test variations of that, you need
 to make a new test file for each version.
 
+Unless you use `jest-mock-primitive`. 😎
+
 
 ## Usage
 
@@ -21,7 +25,7 @@ the module after passing it through `primitive-mock`.
 
 ```js
 // __mocks__/config.js
-import mock from 'primitive-mock'
+import mock from 'jest-mock-primitive'
 module.exports = mock('../config')  // yes, use module.exports
 ```
 

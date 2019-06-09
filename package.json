@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "mock-primitive",
+  "name": "jest-mock-primitive",
   "main": "lib/index.js",
   "scripts": {
     "start": "babel-node src/index.js",
@@ -20,5 +20,8 @@
     "jest": "^23.6.0"
   },
   "dependencies": {},
+  "peerDependencies": {
+    "jest": "^23.6.0"
+  },
   "license": "ISC"
 }
