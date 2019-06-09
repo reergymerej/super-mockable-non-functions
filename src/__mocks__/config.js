@@ -34,7 +34,7 @@ module.exports = new Proxy(mod, {
   // This is a generic getter.  Any property that we've created a primitive mock
   // for will be intercepted and fed the mock value.
   get(target, name, receiver) {
-    const primitiveMock = primitiveMocks[getPrimitiveMockName(name)]
+    const primitiveMock = typeof name == 'string' && primitiveMocks[getPrimitiveMockName(name)]
     return primitiveMock
       ? primitiveMock()
       : Reflect.get(target, name, receiver)
