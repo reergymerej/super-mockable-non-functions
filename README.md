@@ -12,6 +12,38 @@ jest.mock('./config', () => ({ name: 'Bingo' }))
 to make a new test file for each version.
 
 
+## Usage
+
+To mock primitives on a file called `config.js`, add a [manual
+mock](https://jestjs.io/docs/en/manual-mocks#mocking-user-modules).  Then export
+the module after passing it through `primitive-mock`.
+
+
+```js
+// __mocks__/config.js
+import mock from 'primitive-mock'
+module.exports = mock('../config')  // yes, use module.exports
+```
+
+Now you can mock primitives just like you mock functions.
+
+```js
+it('should allow me to force feed values for a primitive', () => {
+  const { nameMock } = require('./config')
+  nameMock.mockImplementationOnce(() => 'Bert')
+  expect(proxy.getName()).toBe('Bert')
+
+  nameMock.mockImplementationOnce(() => 'Ernie')
+  expect(proxy.getName()).toBe('Ernie')
+})
+```
+
+The rest of the module is mocked via
+[genMockFromModule](https://jestjs.io/docs/en/jest-object#jestgenmockfrommodulemodulename),
+so you can use it as usual.
+
+
+
 ## Caveat
 
 Due to the way the [`import * as` style of imports breaks
