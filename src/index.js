@@ -1,7 +1,5 @@
 export default (modulePath) => {
-  // substr is my silly trick to jump up from the __mocks__ dir
-  // This should probably be way smarter than this.
-  const config = jest.genMockFromModule(modulePath.substr(1))
+  const config = jest.genMockFromModule(modulePath)
 
   const primitivesBlacklist = [
     '__esModule',

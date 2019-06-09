@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/reergymerej/super-mockable-non-functions.svg?branch=master)](https://travis-ci.org/reergymerej/super-mockable-non-functions)
 
-Jest gives you a pretty beefy way to mock imports, but have you ever tried to
-[mock a primitive](https://jestjs.io/docs/en/jest-object#primitives)?  You can
-create a mock within your test file...
+Ever tried to [mock a
+primitive](https://jestjs.io/docs/en/jest-object#primitives)?  You can create a
+mock within your test file...
 
 ```js
 jest.mock('./config', () => ({ name: 'Bingo' }))
@@ -26,19 +26,25 @@ the module after passing it through `primitive-mock`.
 ```js
 // __mocks__/config.js
 import mock from 'jest-mock-primitive'
-module.exports = mock('../config')  // yes, use module.exports
+import path from 'path'
+
+// Use module.exports and provide the absolute path.
+module.exports = mock(path.resolve(__dirname, '../config'))
 ```
 
-Now you can mock primitives just like you mock functions.
+Now you can mock primitives just like you mock functions.  Each primitive is on
+the mocked module with the original value, but they also have "backdoor" mocks.
+To alter or interrogate the mock for `name`, use `nameMock`.  For `color`, use
+`colorMock`.  For `evilBananaSpaceShip`, use `evilBananaSpaceShipMock`.
 
 ```js
 it('should allow me to force feed values for a primitive', () => {
   const { nameMock } = require('./config')
   nameMock.mockImplementationOnce(() => 'Bert')
-  expect(proxy.getName()).toBe('Bert')
+  expect(app.getName()).toBe('Bert')
 
   nameMock.mockImplementationOnce(() => 'Ernie')
-  expect(proxy.getName()).toBe('Ernie')
+  expect(app.getName()).toBe('Ernie')
 })
 ```
 
@@ -47,8 +53,13 @@ The rest of the module is mocked via
 so you can use it as usual.
 
 
+## Complete Example
 
-## Caveat
+![example](https://user-images.githubusercontent.com/1720010/59156631-76b4f480-8a53-11e9-8c1a-24328bd5762c.png)
+
+
+## Caveats
+
 
 Due to the way the [`import * as` style of imports breaks
 references](https://reergymerej.github.io/blog/2019/06/08/importing-getters.html),
