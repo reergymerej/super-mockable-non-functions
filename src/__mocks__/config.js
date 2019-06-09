@@ -1,3 +1,3 @@
 import mock from '..'
-
-module.exports = mock('../config')
+import path from 'path'
+module.exports = mock(path.resolve(__dirname, '../config'))
