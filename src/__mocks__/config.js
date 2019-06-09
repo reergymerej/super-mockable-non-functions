@@ -10,28 +10,28 @@
 
 const config = jest.genMockFromModule('../config')
 
-
-// console.log(config.age)
-// console.log(config.default.age)
-
-
-const primitives = [
-  'color',
-  'name',
+const primitivesBlacklist = [
+  '__esModule',
+  'default',
 ]
 
 const getPrimitiveMockName = (primitive) => `${primitive}Mock`
 
-const primitiveMocks = primitives.reduce((acc, primitive) => {
-  return {
-    ...acc,
-    [getPrimitiveMockName(primitive)]: jest.fn(() => config[primitive]),
-  }
-}, {})
+const isPrimitive = ([key, value]) => !primitivesBlacklist.includes(key)
+  && typeof value !== 'function'
 
+const addPrimitiveMock = (acc, primitive) => ({
+  ...acc,
+  [getPrimitiveMockName(primitive)]: jest.fn(() => config[primitive]),
+})
+
+const primitiveMocks = Object.entries(config)
+  .filter(isPrimitive)
+  .map(([key]) => key)
+  .reduce(addPrimitiveMock, {})
 
 const mod = {
-  age: jest.fn(),
+  ...config.default,
   ...primitiveMocks,
 }
 
