@@ -29,6 +29,15 @@ describe('mocked values', () => {
     colorMock.mockImplementationOnce(() => 'purple')
     expect(proxy.getColor()).toBe('purple')
   })
+
+  it('should allow me use primitive mocks through default', () => {
+    const { colorMock } = require('./config').default
+    colorMock.mockImplementationOnce(() => 'pink')
+    expect(proxy.getColor()).toBe('pink')
+
+    colorMock.mockImplementationOnce(() => 'yellow')
+    expect(proxy.getColor()).toBe('yellow')
+  })
 })
 
     // expect(proxy.getName()).toBe('Diz')

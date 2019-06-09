@@ -30,11 +30,15 @@ const primitiveMocks = Object.entries(config)
   .map(([key]) => key)
   .reduce(addPrimitiveMock, {})
 
-const mod = {
+const defaultWithPrimitiveMocks = {
   ...config.default,
   ...primitiveMocks,
 }
 
+const mod = {
+  ...defaultWithPrimitiveMocks,
+  default: defaultWithPrimitiveMocks,
+}
 
 module.exports = new Proxy(mod, {
   // This is a generic getter.  Any property that we've created a primitive mock
