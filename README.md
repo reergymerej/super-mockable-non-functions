@@ -6,6 +6,9 @@
 
 
 
+  TODO
+  // unless we can patch the stuff from default into the top-level...
+  it('should NOT work for modules imported with namespace')
 
 
 
