@@ -1,3 +1,3 @@
-import mock from '../primitive-mock'
+import mock from '..'
 
 module.exports = mock('../config')

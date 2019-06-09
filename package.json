@@ -1,6 +1,16 @@
 {
   "version": "1.0.0",
   "name": "jest-mock-primitive",
+  "description": "mock primitives/non-functions with Jest",
+  "keywords": [
+    "jest",
+    "mock",
+    "mocking",
+    "primitives",
+    "constants",
+    "static",
+    "non-functions"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "start": "babel-node src/index.js",
