@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "jest-mock-primitive",
   "description": "mock primitives/non-functions with Jest",
   "keywords": [
