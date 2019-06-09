@@ -1,19 +1,41 @@
-import * as proxyImportSpecifier from './proxy-ImportSpecifier'
+import * as proxy from './proxy-ImportSpecifier'
 
-xdescribe('proxies', () => {
-  it('should work for modules imported with default')
-  it('should work for modules imported with named imports')
-  it('should work for modules imported with namespace using namespace.default')
+jest.mock('./config')
 
-  // unless we can patch the stuff from default into the top-level...
-  it('should NOT work for modules imported with namespace')
-})
+describe('mocked values', () => {
+  it('should allow me to force feed values for a function', () => {
+    const { age } = require('./config')
+    age.mockImplementationOnce(() => 99)
+    expect(proxy.getAge()).toBe(99)
 
-// any way of exporting should work
-xdescribe('exports', () => {
-  test('module.exports')
-  test('exports.foo')
+    age.mockImplementationOnce(() => 66)
+    expect(proxy.getAge()).toBe(66)
+  })
 
-  test('named exports')
-  test('default exports')
+  it('should allow me to force feed values for a primitive', () => {
+    const { nameMock } = require('./config')
+    nameMock.mockImplementationOnce(() => 'Bert')
+    expect(proxy.getName()).toBe('Bert')
+
+    nameMock.mockImplementationOnce(() => 'Ernie')
+    expect(proxy.getName()).toBe('Ernie')
+  })
+
+  it('should allow me to force feed values for another primitive', () => {
+    const { colorMock } = require('./config')
+    colorMock.mockImplementationOnce(() => 'green')
+    expect(proxy.getColor()).toBe('green')
+
+    colorMock.mockImplementationOnce(() => 'purple')
+    expect(proxy.getColor()).toBe('purple')
+  })
+
+  it('should allow me use primitive mocks through default', () => {
+    const { colorMock } = require('./config').default
+    colorMock.mockImplementationOnce(() => 'pink')
+    expect(proxy.getColor()).toBe('pink')
+
+    colorMock.mockImplementationOnce(() => 'yellow')
+    expect(proxy.getColor()).toBe('yellow')
+  })
 })

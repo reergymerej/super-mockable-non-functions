@@ -39,15 +39,3 @@ describe('mocked values', () => {
     expect(proxy.getColor()).toBe('yellow')
   })
 })
-
-    // expect(proxy.getName()).toBe('Diz')
-    // expect(proxy.getColor()).toBe('blue')
-//
-// any way of exporting should work
-xdescribe('exports', () => {
-  test('module.exports')
-  test('exports.foo')
-
-  test('named exports')
-  test('default exports')
-})
