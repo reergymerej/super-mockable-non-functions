@@ -1,5 +1,5 @@
 export const name = 'Diz'
-export const age = () => 99
+export const age = jest.fn(() => 99)
 export const color = 'blue'
 
 export default {

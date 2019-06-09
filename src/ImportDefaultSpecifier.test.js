@@ -3,13 +3,14 @@ import * as proxy from './proxy-ImportDefaultSpecifier'
 jest.mock('./config')
 
 describe('mocked values', () => {
-  it('should return what I mocked in __mocks__', () => {
-    expect(proxy.getName()).toBe('Diz')
+  it('should allow me to force feed values for a function', () => {
     expect(proxy.getAge()).toBe(99)
-    expect(proxy.getColor()).toBe('blue')
   })
 })
 
+    // expect(proxy.getName()).toBe('Diz')
+    // expect(proxy.getColor()).toBe('blue')
+//
 // any way of exporting should work
 xdescribe('exports', () => {
   test('module.exports')
